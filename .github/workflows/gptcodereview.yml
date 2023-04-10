@@ -1,0 +1,30 @@
+name: ChatGPT Code Review
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  code-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: app token
+        id: my-app
+        uses: getsentry/action-github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+      - name: cr
+        uses: sloep/ChatGPT-CodeReview@test
+        env:
+          GITHUB_TOKEN: ${{ steps.my-app.outputs.token }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Optional
+          LANGUAGE: English
+          MODEL: gpt-3.5-turbo
+          top_p: 0.90
+          temperature: 0.15
