@@ -19,7 +19,7 @@ jobs:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
       - name: cr
-        uses: sloep/ChatGPT-CodeReview@v2
+        uses: sloep/ChatGPT-CodeReview@test
         env:
           GITHUB_TOKEN: ${{ steps.my-app.outputs.token }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
